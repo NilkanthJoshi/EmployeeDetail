@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #4e54c8;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #f0f0f0;
+            color: black;
+            border: 2px solid black;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4e54c8;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #8f94fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button onclick="signup()">Sign Up</button>
+        <a href="signin.html">Have an Account ? Login Here</a>
+    </div>
+
+    <script>
+        function signup() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill all fields.');
+                return;
+            }
+    
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+    
+            if (!validatePassword(password)) {
+                alert('Password must be at least 3 characters long, contain one uppercase letter, and one number.');
+                return;
+            }
+    
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+    
+            const user = { name, email, password };
+            localStorage.setItem('user', JSON.stringify(user));
+    
+            alert('Signup Successful! Now, please Sign In.');
+            window.location.href = "signin.html"; 
+        }
+    
+        function validateEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailPattern.test(email);
+        }
+    
+        function validatePassword(password) {
+            const passwordPattern = /^(?=.*[A-Z])(?=(?:[^0-9]*[0-9]){1}[^0-9]*$).{3,}$/;
+            return passwordPattern.test(password);
+        }
+    </script>
+</body>
+</html>
